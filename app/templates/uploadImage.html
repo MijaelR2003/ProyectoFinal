@@ -1,0 +1,62 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Imagenes{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-md">
+    <h2 class="text-2xl font-semibold mb-6 pt-4 text-gray-800 text-center">Subir Radiografía</h2>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+
+    <form method="POST" action="{{ url_for('main.subir_imagen') }}" enctype="multipart/form-data" class="space-y-6 pt-4">
+        <div class="flex items-center space-x-4 max-w-3xl mx-auto">
+            <!-- Contenedor del input -->
+            <div class="flex-1">
+                <input type="file" id="imagen" name="imagen" accept="image/*"
+                    class="block w-full text-sm text-gray-700 border border-gray-300 rounded-md p-2 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+                    onchange="mostrarVistaPrevia(event)">
+            </div>
+        
+            <!-- Contenedor del botón -->
+            <div>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
+                    Subir Imagen
+                </button>
+            </div>
+        </div>
+        
+        <!-- Vista previa de la imagen -->
+        <div class="text-center mt-4">
+            <img id="vista-previa" src="" alt="Vista previa de la imagen"
+                class="mx-auto max-h-64 hidden rounded-md shadow">
+        </div>
+    </form>
+</div>
+
+<script>
+    function mostrarVistaPrevia(event) {
+        const input = event.target;
+        const vistaPrevia = document.getElementById('vista-previa');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                vistaPrevia.src = e.target.result;
+                vistaPrevia.classList.remove('hidden');
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+{% endblock %}

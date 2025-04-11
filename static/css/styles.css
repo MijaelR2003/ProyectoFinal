@@ -1,0 +1,53 @@
+/* static/css/styles.css */
+
+/* Estilos generales de la cabecera */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: white;
+}
+
+header .logo img {
+    width: 100px;
+}
+
+header .navigation ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header .navigation ul li {
+    display: inline;
+}
+
+header .navigation ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+header .navigation ul li a:hover {
+    color: #f39c12;
+}
+
+header .search input {
+    padding: 5px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+header .search button {
+    padding: 5px 10px;
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+header .search button:hover {
+    background-color: #e67e22;
+}
