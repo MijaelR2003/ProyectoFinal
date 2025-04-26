@@ -1,0 +1,70 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Encabezado con título y botón "Registrar Paciente" -->
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Pacientes Registrados</h2>
+        <a href="{{ url_for('main.patient_form') }}" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
+            Registrar Paciente
+        </a>
+    </div>
+
+    <!-- Mensajes flash -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="mb-4">
+          {% for message in messages %}
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-2">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Tabla de pacientes -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+        <thead>
+          <tr class="bg-gray-100 text-left">
+            <th class="px-4 py-2 text-sm font-medium text-gray-700 border-b">ID</th>
+            <th class="px-4 py-2 text-sm font-medium text-gray-700 border-b">Nombre y Apellido</th>
+            <th class="px-4 py-2 text-sm font-medium text-gray-700 border-b">CI</th>
+            <th class="px-4 py-2 text-sm font-medium text-gray-700 border-b">Fecha de Registro</th>
+            <th class="px-4 py-2 text-sm font-medium text-gray-700 border-b">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for paciente in pacientes %}
+          <tr class="border-b">
+            <td class="px-4 py-2 text-sm text-gray-700">{{ paciente.mod_pac_id }}</td>
+            <td class="px-4 py-2 text-sm text-gray-700">{{ paciente.mod_pac_nombre }} {{ paciente.mod_pac_apellido }}</td>
+            <td class="px-4 py-2 text-sm text-gray-700">{{ paciente.mod_pac_ci }}</td>
+            <td class="px-4 py-2 text-sm text-gray-700">{{ paciente.mod_pac_fecha_registro }}</td>
+            <td class="px-4 py-2 text-sm text-gray-700">
+              <!-- Botón Editar -->
+              <a href="{{ url_for('main.edit_patient_form', paciente_id=paciente.mod_pac_id) }}" class="text-blue-600 hover:text-blue-800 mr-2">
+                <i class="fas fa-edit"></i> Editar
+              </a>
+              <!-- Botón Eliminar -->
+              <form action="{{ url_for('main.delete_patient', patient_id=paciente.mod_pac_id) }}" method="POST" class="inline" onsubmit="return confirm('¿Seguro que deseas eliminar este paciente?');">
+                <button type="submit" class="text-red-600 hover:text-red-800 ml-2">
+                  <i class="fas fa-trash-alt"></i> Eliminar
+                </button>
+              </form>
+              <!-- Botón Imágenes -->
+              <a href="{{ url_for('main.patient_images', paciente_id=paciente.mod_pac_id) }}" class="text-green-600 hover:text-green-800 ml-2">
+                <i class="fas fa-images"></i> Imágenes
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if not pacientes %}
+        <div class="text-center py-4">No hay pacientes registrados aún.</div>
+      {% endif %}
+    </div>
+
+
+</div>
+{% endblock %}

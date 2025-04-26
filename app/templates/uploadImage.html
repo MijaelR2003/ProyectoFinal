@@ -19,6 +19,7 @@
 
 
     <form method="POST" action="{{ url_for('main.subir_imagen') }}" enctype="multipart/form-data" class="space-y-6 pt-4">
+        <input type="hidden" name="paciente_id" value="{{ paciente_id }}">
         <div class="flex items-center space-x-4 max-w-3xl mx-auto">
             <!-- Contenedor del input -->
             <div class="flex-1">

@@ -1,0 +1,29 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<div class="flex justify-center bg-gray-100 mt-20">
+    <div class="bg-white rounded-lg shadow-lg p-12 flex flex-row items-center max-w-6xl w-full">
+        <!-- Imagen más grande a la izquierda -->
+        <div class="flex-shrink-0 flex justify-center items-center w-2/3">
+            <img src="{{ url_for('static', filename=image.mod_img_path) }}" alt="Imagen dental" class="rounded-lg shadow-md mx-auto" style="max-width:600px; max-height:500px; width:auto; height:auto; object-fit:contain; display:block;">
+        </div>
+        <!-- Info y botones a la derecha -->
+        <div class="w-1/3 flex flex-col justify-between h-full pl-12">
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">{{ image.mod_img_name }}</h2>
+                <p class="text-gray-600 mb-8">Fecha de subida: {{ image.mod_img_date }}</p>
+            </div>
+            <div class="flex gap-4 mt-auto">
+                <a href="{{ url_for('main.patient_images', paciente_id=paciente_id) }}"
+                   class="bg-yellow-400 text-gray-800 px-6 py-2 rounded-md font-semibold shadow hover:bg-gray-400 transition-colors duration-200">
+                    Volver
+                </a>
+                <!--<a href="{{ url_for('main.patient_form', image_id=image.mod_img_id) }}"
+                   class="bg-yellow-400 text-gray-800 px-6 py-2 rounded-md font-semibold shadow hover:bg-gray-400 transition-colors duration-200">
+                    Registrar/Ver Pacientes
+                </a>-->
+            </div>
+        </div>  
+    </div>
+</div>
+{% endblock %}

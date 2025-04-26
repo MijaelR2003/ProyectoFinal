@@ -1,0 +1,97 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<div class="flex justify-center bg-gray-100 mt-20">
+    <div class="bg-white rounded-lg shadow-lg p-2 flex flex-row items-start max-w-4xl w-full gap-4">
+    <form method="POST" action="{{ url_for('main.edit_patient_form', paciente_id=paciente.mod_pac_id) }}" class="w-full flex flex-col" id="formEditarPaciente">
+        <div class="flex flex-row gap-8">
+            <!-- Columna izquierda: datos del paciente -->
+            <div class="w-1/2 bg-white p-2 rounded-lg flex flex-col gap-2">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Datos del Paciente</h2>
+                <input type="hidden" name="image_id" value="{{ image_id }}">
+                <div class="mb-3">
+                    <label for="mod_pac_ci" class="form-label">CI</label>
+                    <input type="text" class="form-control" id="mod_pac_ci" name="mod_pac_ci" value="{{ paciente.mod_pac_ci if paciente else '' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mod_pac_nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="mod_pac_nombre" name="mod_pac_nombre" value="{{ paciente.mod_pac_nombre if paciente else '' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mod_pac_apellido" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="mod_pac_apellido" name="mod_pac_apellido" value="{{ paciente.mod_pac_apellido if paciente else '' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mod_pac_fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="mod_pac_fecha_nacimiento" name="mod_pac_fecha_nacimiento" value="{{ paciente.mod_pac_fecha_nacimiento if paciente else '' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mod_pac_telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="mod_pac_telefono" name="mod_pac_telefono" value="{{ paciente.mod_pac_telefono if paciente else '' }}">
+                </div>
+                <div class="mb-3">
+                    <label for="mod_pac_direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="mod_pac_direccion" name="mod_pac_direccion" value="{{ paciente.mod_pac_direccion if paciente else '' }}">
+                </div>
+                <div class="mb-3">
+                    <label for="mod_pac_email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="mod_pac_email" name="mod_pac_email" value="{{ paciente.mod_pac_email if paciente else '' }}">
+                </div>
+                <div class="mb-3">
+                    <label for="mod_pac_observaciones" class="form-label">Observaciones</label>
+                    <textarea class="form-control" id="mod_pac_observaciones" name="mod_pac_observaciones">{{ paciente.mod_pac_observaciones if paciente else '' }}</textarea>
+                </div>
+            </div>
+            <!-- Columna derecha: revisión del paciente -->
+            <div class="w-1/2 bg-gray-50 p-2 rounded-lg border border-gray-200 flex flex-col gap-2">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Revisión del paciente</h2>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="mod_pac_rev_dolor_persistente" name="mod_pac_rev_dolor_persistente" {% if revision and revision.mod_pac_rev_dolor_persistente %}checked{% endif %}>
+                    <label class="form-check-label" for="mod_pac_rev_dolor_persistente">Dolor dental intenso y persistente</label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="mod_pac_rev_sensibilidad_prolongada" name="mod_pac_rev_sensibilidad_prolongada" {% if revision and revision.mod_pac_rev_sensibilidad_prolongada %}checked{% endif %}>
+                    <label class="form-check-label" for="mod_pac_rev_sensibilidad_prolongada">Sensibilidad prolongada al frío/calor</label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="mod_pac_rev_hinchazon" name="mod_pac_rev_hinchazon" {% if revision and revision.mod_pac_rev_hinchazon %}checked{% endif %}>
+                    <label class="form-check-label" for="mod_pac_rev_hinchazon">Inflamación o hinchazón</label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="mod_pac_rev_fistula" name="mod_pac_rev_fistula" {% if revision and revision.mod_pac_rev_fistula %}checked{% endif %}>
+                    <label class="form-check-label" for="mod_pac_rev_fistula">Fístula o absceso</label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="mod_pac_rev_cambio_color" name="mod_pac_rev_cambio_color" {% if revision and revision.mod_pac_rev_cambio_color %}checked{% endif %}>
+                    <label class="form-check-label" for="mod_pac_rev_cambio_color">Cambio de color en el diente</label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="mod_pac_rev_dolor_percusion" name="mod_pac_rev_dolor_percusion" {% if revision and revision.mod_pac_rev_dolor_percusion %}checked{% endif %}>
+                    <label class="form-check-label" for="mod_pac_rev_dolor_percusion">Dolor a la percusión</label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="mod_pac_rev_movilidad" name="mod_pac_rev_movilidad" {% if revision and revision.mod_pac_rev_movilidad %}checked{% endif %}>
+                    <label class="form-check-label" for="mod_pac_rev_movilidad">Movilidad dental</label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="mod_pac_rev_caries_profunda" name="mod_pac_rev_caries_profunda" {% if revision and revision.mod_pac_rev_caries_profunda %}checked{% endif %}>
+                    <label class="form-check-label" for="mod_pac_rev_caries_profunda">Caries profunda o fractura</label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="mod_pac_rev_lesion_radiografica" name="mod_pac_rev_lesion_radiografica" {% if revision and revision.mod_pac_rev_lesion_radiografica %}checked{% endif %}>
+                    <label class="form-check-label" for="mod_pac_rev_lesion_radiografica">Lesión periapical radiográfica</label>
+                </div>
+                <div class="mb-3">
+                    <label for="mod_pac_rev_observaciones" class="form-label">Observaciones</label>
+                    <textarea class="form-control" id="mod_pac_rev_observaciones" name="mod_pac_rev_observaciones">{{ revision.mod_pac_rev_observaciones if revision else '' }}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="flex gap-2 justify-center mt-8">
+            <button type="submit" class="bg-yellow-400 text-gray-800 px-6 py-2 rounded-md font-semibold shadow hover:bg-gray-400 transition-colors duration-200">Guardar</button>
+            <a href="{{ url_for('main.patient_list') }}" class="bg-yellow-400 text-gray-800 px-6 py-2 rounded-md font-semibold shadow hover:bg-gray-400 transition-colors duration-200">Cancelar</a>
+        </div>
+    </form>
+    </div>
+</div>
+{% endblock %}
